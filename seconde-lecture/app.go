@@ -6,11 +6,23 @@ import (
 )
 
 func main(){
-	var investmentAmount = 1000;
-	var expectedReturnRate = 5.5;
-	var years = 10;
+	const inflationRate = 2.5
+	var investmentAmount float64
+	var years float64
+	expectedReturnRate := 5.5;
 
-	var futureValue = float64(investmentAmount) * math.Pow((1 + expectedReturnRate / 100),float64(years))
+	fmt.Print("Enter investment amount: ")
+	fmt.Scan(&investmentAmount) // & is pointer allows Scan to populate variable (not working with constant)
+
+	fmt.Print("Enter Expected Return Rate: ")
+	fmt.Scan(&expectedReturnRate)
+	
+	fmt.Print("Enter years: ")
+	fmt.Scan(&years)
+
+	futureValue :=  investmentAmount * math.Pow((1 + expectedReturnRate / 100),years)
+	futureRealValue := futureValue / math.Pow(1 + inflationRate / 100, years)
 
 	fmt.Println(futureValue)
+	fmt.Println(futureRealValue)
 }
