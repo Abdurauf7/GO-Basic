@@ -5,15 +5,11 @@ import (
 )
 
 func main()  {
-	var revenue float64
-	var expenses float64
-	var tax_rate float64
+	revenue := getUserInput("Enter revenue amount: ")
+	expenses := getUserInput("Enter expenses: ")
+	tax_rate := getUserInput("Enter tax_rate: ")
 
-	revenue = outputText("Enter revenue amount: ",revenue)
-	expenses = outputText("Enter expenses: ",expenses)
-	tax_rate = outputText("Enter tax_rate: ",tax_rate)
-
-	ebt,profit,ration := calculateProfit(revenue,expenses,tax_rate)
+	ebt,profit,ration := calculateFinancials(revenue,expenses,tax_rate)
 
 	febt := formattedText("EBT",ebt)
 	fp := formattedText("PROFIT",profit)
@@ -22,13 +18,14 @@ func main()  {
 	fmt.Print(febt,fp,fr)
 }
 
-func outputText(text string, value float64) (float64) {
+func getUserInput(text string) float64 {
+	var userInput float64
 	fmt.Print(text)
-	fmt.Scan(&value)
-	return value
+	fmt.Scan(&userInput)
+	return userInput
 }
 
-func calculateProfit(revenue,expenses,tax_rate float64) (ebt float64, profit float64, ratio float64){
+func calculateFinancials(revenue,expenses,tax_rate float64) (ebt float64, profit float64, ratio float64){
 	ebt = revenue - expenses
 	profit = ebt * (1 - tax_rate / 100)
 	ratio = ebt / profit
@@ -38,5 +35,5 @@ func calculateProfit(revenue,expenses,tax_rate float64) (ebt float64, profit flo
 
 func formattedText(text string, value float64) (formattedValue string){
 	formattedValue = fmt.Sprintf(text + ": %.1f\n", value)
-	return
+	return formattedValue
 }
