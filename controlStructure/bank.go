@@ -1,15 +1,22 @@
 package main
 
-import "fmt"
-import "os"
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
 
 const accountBalanceFile = "balance.txt"
 
 
 // Reading file
-func getBalanceFromFile(){
+func getBalanceFromFile() float64{
 	// if we don't use some argument we use _
+
 	data, _ := os.ReadFile(accountBalanceFile)
+	balanceConvertToText := string(data)
+	balanceConvertToFloat, _ := strconv.ParseFloat(balanceConvertToText,64)
+	return balanceConvertToFloat
 }
 
 // writing data into txt
@@ -20,7 +27,7 @@ func writeBalanceToFile(balance float64){
 
 
 func main() {
-	var accountBalance = 1000.0
+	var accountBalance = getBalanceFromFile()
 	fmt.Println("\tWelcome to Go bank!!!")
 	for {
 		fmt.Println("*==================================*")
