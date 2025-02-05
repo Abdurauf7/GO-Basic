@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -8,26 +9,39 @@ import (
 
 const accountBalanceFile = "balance.txt"
 
-
 // Reading file
-func getBalanceFromFile() float64{
+func getBalanceFromFile() (float64, error) {
 	// if we don't use some argument we use _
 
-	data, _ := os.ReadFile(accountBalanceFile)
+	data, err := os.ReadFile(accountBalanceFile)
+	if err != nil {
+		return 1000, errors.New("failed to find balance file")
+	}
 	balanceConvertToText := string(data)
-	balanceConvertToFloat, _ := strconv.ParseFloat(balanceConvertToText,64)
-	return balanceConvertToFloat
+	balanceConvertToFloat, err := strconv.ParseFloat(balanceConvertToText, 64)
+	if err != nil {
+		return 1000, errors.New("failed to parse stored balance value")
+	}
+	return balanceConvertToFloat, nil
 }
 
 // writing data into txt
-func writeBalanceToFile(balance float64){
+func writeBalanceToFile(balance float64) {
 	balanceText := fmt.Sprint(balance)
-	os.WriteFile(accountBalanceFile,[]byte(balanceText),0644)
+	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
 }
 
-
 func main() {
-	var accountBalance = getBalanceFromFile()
+	var accountBalance, err = getBalanceFromFile()
+
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		fmt.Println("*==================================*")
+		return
+		// panic("Can't continue, sorry.")  // to show err more details
+	}
+
 	fmt.Println("\tWelcome to Go bank!!!")
 	for {
 		fmt.Println("*==================================*")
@@ -75,8 +89,8 @@ func main() {
 			fmt.Println("Goodbye!!!")
 			fmt.Println("Thanks for choosing our bank!!!")
 			// in switch case we use return;
-			return 
-			// in if statement we use break; 
+			return
+			// in if statement we use break;
 		default:
 			fmt.Println("Invalid choice, please try again.")
 		}
