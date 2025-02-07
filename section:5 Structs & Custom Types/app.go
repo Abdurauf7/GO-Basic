@@ -1,44 +1,40 @@
 package main
 
-// Structs - grouping data & function into collections
-
 import (
+	"expample/section5/user"
 	"fmt"
-	"time"
 )
-
-type user struct {
-	firstName string
-	lastName  string
-	birthdate string
-	createdAt time.Time
-}
 
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
 	userBirthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
-	var appUser user
+	// Describing user
+	appUser, err := user.New(userFirstName, userLastName, userBirthdate)
 
-	appUser = user{
-		firstName: userFirstName,
-		lastName:  userLastName,
-		birthdate: userBirthdate,
-		createdAt: time.Now(),
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
-	// ... do something awesome with that gathered data!
 
-	fmt.Println(appUser)
-}
+	appUser.OutpuUserDetails()
+	appUser.ClearUserName()
+	appUser.OutpuUserDetails()
 
-func outpuUserDetails(appUser any) string {
-	fmt.Println(appUser.firstName, appUser.lastName, appUser.birthdate)
+	// Describing Admin
+
+	adminUser, err := user.NewAdmin("test@mail.ru", "test12345")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	adminUser.OutpuUserDetails()
 }
 
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
-	fmt.Scan(&value)
+	fmt.Scanln(&value)
 	return value
 }
