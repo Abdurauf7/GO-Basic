@@ -95,17 +95,25 @@ func outputData(data outputtable) error {
 
 // if we want to display any value we can add simply interface{} or any type
 func printSomething(value interface{}) {
-	switch value.(type) { // defining type of value string or interger or any type
-	case int:
-		fmt.Println("This is an integer")
-	case string:
-		fmt.Println("This is a string")
-	case float64:
-		fmt.Println("This is a float")
-	default:
-		fmt.Println("Unknown type")
+	// switch value.(type) { // defining type of value string or interger or any type
+	// case int:
+	// 	fmt.Println("This is an integer")
+	// case string:
+	// 	fmt.Println("This is a string")
+	// case float64:
+	// 	fmt.Println("This is a float")
+	// default:
+	// 	fmt.Println("Unknown type")
 
+	// }
+	// fmt.Println(value)
+
+	// Another way to define type
+	typedVal, ok := value.(int)
+
+	if ok {
+		fmt.Println("This is an integer", typedVal)
+		return
 	}
-	fmt.Println(value)
 
 }

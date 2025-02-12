@@ -1,8 +1,8 @@
-package main
+package lists
 
 import "fmt"
 
-func listMain() {
+func Lists() {
 	prices := []float64{1.98, 2.55}
 
 	fmt.Println(prices)

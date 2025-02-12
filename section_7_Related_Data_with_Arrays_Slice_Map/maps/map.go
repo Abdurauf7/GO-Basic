@@ -1,8 +1,10 @@
-package main
+package maps
 
 import "fmt"
 
-func main() {
+// In map we can use any thing in key
+
+func Maps() {
 	websites := map[string]string{"Google": "https://google.com", "Amazon": "https://aws.com"} // [key]: value
 
 	fmt.Println(websites)
