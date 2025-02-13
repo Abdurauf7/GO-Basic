@@ -1,16 +1,16 @@
 package prices
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
+	"section9/price_calculator/conversion"
+	"section9/price_calculator/filemanager"
 )
 
 type TaxIncludedPriceJob struct {
-	TaxRate           float64
-	InputPrices       []float64
-	TaxIncludedPrices map[string]float64
+	IOManager         filemanager.FileManager `json:"-"`
+	TaxRate           float64                 `json:"tax_rate"`
+	InputPrices       []float64               `json:"input_prices"`
+	TaxIncludedPrices map[string]string       `json:"tax_included_price"`
 }
 
 func (job *TaxIncludedPriceJob) Process() {
@@ -24,54 +24,32 @@ func (job *TaxIncludedPriceJob) Process() {
 		result[fmt.Sprintf("%.2f", price)] = fmt.Sprintf("%.2f", taxIncludedPrice)
 	}
 
-	fmt.Println(result)
+	job.TaxIncludedPrices = result
+
+	job.IOManager.WriteResult(job)
 }
 
 func (job *TaxIncludedPriceJob) LoadData() {
-	file, err := os.Open("prices.txt")
 
+	lines, err := job.IOManager.ReadLines()
 	if err != nil {
-		fmt.Println("Error while LoadingData")
 		fmt.Println(err)
 		return
 	}
-	scanner := bufio.NewScanner(file)
 
-	var lines []string
-
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	err = scanner.Err()
+	prices, err := conversion.StringsToFloats(lines)
 
 	if err != nil {
-		fmt.Println("Error while Reading file")
 		fmt.Println(err)
-		file.Close()
 		return
-	}
-
-	prices := make([]float64, len(lines))
-
-	for lineIndex, line := range lines {
-		floatPice, err := strconv.ParseFloat(line, 64)
-
-		if err != nil {
-			fmt.Println("Converting sting to float failed")
-			fmt.Println(err)
-			file.Close()
-			return
-		}
-
-		prices[lineIndex] = floatPice
 	}
 
 	job.InputPrices = prices
 }
 
-func NewTaxIncludedPriceJob(taxRate float64) *TaxIncludedPriceJob {
+func NewTaxIncludedPriceJob(fm filemanager.FileManager, taxRate float64) *TaxIncludedPriceJob {
 	return &TaxIncludedPriceJob{
+		IOManager:   fm,
 		TaxRate:     taxRate,
 		InputPrices: []float64{10, 20, 30},
 	}
