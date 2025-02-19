@@ -1,1 +1,2 @@
-GET http://localhost:8090/events
+GET http://localhost:8890/events
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQG1haWwuY29tIiwiZXhwIjoxNzM5OTU0ODM5LCJ1c2VySWQiOjJ9.CDZmPzmjfp6TGj3USMwvJYcqPfhuK7T0zSWbyePZ_74

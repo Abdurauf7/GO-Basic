@@ -1,9 +1,10 @@
-POST http://localhost:8090/events
+POST http://localhost:8890/events
 content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQG1haWwuY29tIiwiZXhwIjoxNzM5OTUzNTM5LCJ1c2VySWQiOjJ9.GndEtPbt8NTJqgJArB6nZn-bIErSzQcJh5td4yhni4k
 
 {
-	"Name": "Event two",
-	"Description": "Description two",
-	"Location": "Location two",
+	"Name": "Event 5",
+	"Description": "Description 5",
+	"Location": "Location 5",
 	"DateTime": "2025-02-17T11:27:00.000Z"
 }

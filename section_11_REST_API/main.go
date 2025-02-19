@@ -16,5 +16,5 @@ func main() {
 	routes.EventRoutes(server)
 	routes.UsersRoutes(server)
 
-	server.Run(":8090") // localhost:8090
+	server.Run(":8890") // localhost:8890
 }
