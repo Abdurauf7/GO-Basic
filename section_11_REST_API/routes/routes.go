@@ -2,6 +2,7 @@ package routes
 
 import (
 	"practice/Rest/controllers/events"
+	"practice/Rest/controllers/registration"
 	"practice/Rest/controllers/users"
 	"practice/Rest/middlewares"
 
@@ -16,6 +17,8 @@ func EventRoutes(server *gin.Engine) {
 	autGroup.POST("/events", events.CreateEvent)
 	autGroup.PUT("/events/:id", events.UpdateEvent)
 	autGroup.DELETE("/events/:id", events.DeleteEvent)
+	autGroup.POST("/events/:id/register", registration.RegisterForEvent)
+	autGroup.DELETE("/events/:id/register", registration.CancelRegistration)
 }
 
 func UsersRoutes(server *gin.Engine) {
